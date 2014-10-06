@@ -1,2 +1,2 @@
-FluidDynamicFramework-DirectX-
+FluidDynamicFramework-DirectX-Spring Model
 ==============================
