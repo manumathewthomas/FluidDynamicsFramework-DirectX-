@@ -4,45 +4,38 @@
 #include "windows.h"
 
 //variables decalration
+
 dxtexture ball,cannon,background,ship,ship2,ball2;
-float iangle=0.00000f,iangle2=0,iTime=0,iTime2=0,fHighest2=0,fHighest1=0;;
-bool bpressed=0,launch=0,newcannon=0,launch2=0,bpressed2=0,b1=0,b2=0;
+
+float iangle=0.00000f,iangle2=0,iTime=0,iTime2=0,fHighest2=0,fHighest1=0;
+
 float fpower=0.3,fpower2=0.3;
+
+float yFall=0,x,y,pointX,pointY;
+
+bool bpressed=0,launch=0,newcannon=0,launch2=0,bpressed2=0,b1=0,b2=0;
+
+int foo=0,f=0,threadCount=0,threadWaterCount=0;
+
 int hit1=0,hit2=0,block=0;
 
-//objects are created
-
-void textureLoad();
-void waterInit();
-
-void waterWaves();
-void collision(dxtexture,dxtexture);
-
-
-
-
-
-
-
-
 water w[30]; 
-int foo=0,f=0,threadCount=0,threadWaterCount=0;
-float yFall=0,x,y,pointX,pointY;
+
 texture2D bg,rockTex,shipTex;
+
 POINT cursorPos;
 
 bool waterCheck = false;
 
-//D3DXMatrixRotationX(&matRotateX, rx);
+//objects are created
 
+void textureLoad();
 
+void waterInit();
 
+void waterWaves();
 
-
-
-
-
-
+void collision(dxtexture,dxtexture);
 
 
 
@@ -50,72 +43,94 @@ void waterWaves()
 {
 	for(int i=0;i<100;i++)
 	{
-			wavesPropogation(w);
+		wavesPropogation(w);
 			
-	Sleep(10);
+		Sleep(10);
 	
 	}
 		
 }
+
 Game1::Game1(void)
 {	
 	//objects of dxtexutre are created
 	//their postion and width and height inspace is given
 	
 	background=dxtexture(-12.0f,12.0f,0.0f,25,23);
+	
 	ship=dxtexture(0.0f,2.0f,0.0f,6.0f,4.0f);
+	
 	ship2=dxtexture(-10.0f,2.0f,0.0f,6.0f,4.0f);
- ball=dxtexture(ship.x+2,ship.y-1,0.0f,1.0f,1.0f);
- ball2=dxtexture(ship2.x+2,ship2.y-1,0.0f,1.0f,1.0f);
+	
+ 	ball=dxtexture(ship.x+2,ship.y-1,0.0f,1.0f,1.0f);
+ 	
+ 	ball2=dxtexture(ship2.x+2,ship2.y-1,0.0f,1.0f,1.0f);
+ 	
 	//camera variabes
 	pos.x = 0.0f;
+	
 	pos.y = 0.0f;
+	
 	pos.z = -10.0f;
 
 	tgt.x = 0.0f;
+	
 	tgt.y = 0.0f;
+	
 	tgt.z = 0.0f;
 
 	up.x = 0.0f;
+	
 	up.y = 1.0f;
+	
 	up.z = 0.0f;
 
 
 }
+
 //contains the game logics
 void Game1::UpdateGame(IDirect3DDevice9 *device)
 {
-	
-	
 	/* player 1 new ball*/
 	if(GetAsyncKeyState(VK_UP))
 	{
 		ball=dxtexture(ship.fxpos+2,ship.fypos-1,0.0f,1.0f,1.0f);
-	iTime=0;
-	//iangle=0.00001f;
-	iangle=0.00003f;
-	launch=0;
-	fpower=0.3f;
+		
+		iTime=0;
+		
+		//iangle=0.00001f;
+		iangle=0.00003f;
+		
+		launch=0;
+		
+		fpower=0.3f;
 
-	block=0;
-	b1=0;
+		block=0;
+		
+		b1=0;
 
 	}
 
 	/* player 2 new ball*/
-		if(GetAsyncKeyState(0x57))
-		{
-			/*2 ship*/
-			ball2=dxtexture(ship2.fxpos+2,ship2.fypos-1,0.0f,1.0f,1.0f);
-	iTime2=0;
-	//iangle2=0.00001f;
-	iangle2=0.00003f;
-	launch2=0;
-	fpower2=0.3f;
+	if(GetAsyncKeyState(0x57))
+	{
+		/*2 ship*/
+		ball2=dxtexture(ship2.fxpos+2,ship2.fypos-1,0.0f,1.0f,1.0f);
+		
+		iTime2=0;
+		
+		//iangle2=0.00001f;
+		iangle2=0.00003f;
+		
+		launch2=0;
+		
+		fpower2=0.3f;
+		
 		b2=0;
+		
 		block=0;
 		
-		}
+	}
 
 	/*ball rotation for player 1*/
 
