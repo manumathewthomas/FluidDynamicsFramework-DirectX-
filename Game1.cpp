@@ -89,16 +89,17 @@ Game1::Game1(void)
 }
 
 //contains the game logics
+
 void Game1::UpdateGame(IDirect3DDevice9 *device)
 {
 	/* player 1 new ball*/
+	
 	if(GetAsyncKeyState(VK_UP))
 	{
 		ball=dxtexture(ship.fxpos+2,ship.fypos-1,0.0f,1.0f,1.0f);
 		
 		iTime=0;
 		
-		//iangle=0.00001f;
 		iangle=0.00003f;
 		
 		launch=0;
@@ -112,14 +113,15 @@ void Game1::UpdateGame(IDirect3DDevice9 *device)
 	}
 
 	/* player 2 new ball*/
+	
 	if(GetAsyncKeyState(0x57))
 	{
 		/*2 ship*/
+		
 		ball2=dxtexture(ship2.fxpos+2,ship2.fypos-1,0.0f,1.0f,1.0f);
 		
 		iTime2=0;
 		
-		//iangle2=0.00001f;
 		iangle2=0.00003f;
 		
 		launch2=0;
@@ -138,39 +140,46 @@ void Game1::UpdateGame(IDirect3DDevice9 *device)
 	 if(GetAsyncKeyState(VK_LBUTTON) && launch==0 )
 	{
 		GetCursorPos(&cursorPos);
-        x = 0;
-        x = cursorPos.x; 
-         y = 0;
-        y = cursorPos.y;
-
 		
+		x = 0;
+		
+        	x = cursorPos.x; 
+        	
+         	y = 0;
+         	
+        	y = cursorPos.y;
+
 		bpressed=1;
 	
-		//	iangle+=0.0003f;
-			iangle+=0.00005f;
+		iangle+=0.00005f;
 	
-			ball.fxrot=0;
-			ball.fyrot=0;
+		ball.fxrot=0;
+		
+		ball.fyrot=0;
 	
-			ball.rotate(iangle);
-fpower+=0.000003;
+		ball.rotate(iangle);
+		
+		fpower+=0.000003;
 
 	}
 
 
 	 /*ball rotation for player 2*///shift key
+	 
 	  if(GetAsyncKeyState(VK_SHIFT) && launch2==0 )
 	{
 		bpressed2=1;
 	
-			//iangle2+=0.00003f;
-			iangle2+=0.00005f;
 	
-			ball2.fxrot=0;
-			ball2.fyrot=0;
+		iangle2+=0.00005f;
 	
-			ball2.rotate(iangle2);
-fpower2+=0.000003;
+		ball2.fxrot=0;
+		
+		ball2.fyrot=0;
+	
+		ball2.rotate(iangle2);
+		
+		fpower2+=0.000003;
 
 	}
 
@@ -179,102 +188,111 @@ fpower2+=0.000003;
 
 
 
-/*player 1 launch*/
+	/*player 1 launch*/
+	
 		if(GetAsyncKeyState(VK_SPACE)&&launch2==0)
 	{
 	
-
-launch=1;
-waterCheck = false;
+		launch=1;
+		
+		waterCheck = false;
 
 
 	}
 
 		/*player 2 launch*/
 
-				if(GetAsyncKeyState(0x45) &&launch==0)
+	if(GetAsyncKeyState(0x45) &&launch==0)
 	{
 	
-
-
-launch2=1;
+		launch2=1;
 
 	}
 
 
 
-/*player 1 movements*/
+	/*player 1 movements*/
+	
 	 if(GetAsyncKeyState(VK_RIGHT))
 	 {
 		 ship.fxmove+=0.0004;
 	
 		 if(launch==0)
-		 ball.x+=0.0004;
+		 
+		 	ball.x+=0.0004;
 	 
 	 
 	 }
+	 
 	 else if(GetAsyncKeyState(VK_LEFT))
 	 {
 	 
-	 ship.fxmove-=0.0004;
+	 	ship.fxmove-=0.0004;
 	 	
-	 if(launch==0)
-	  ball.x-=0.0004;
+	 	if(launch==0)
+	  		ball.x-=0.0004;
 	 }
 
 	 /*player 2 movements*/
-
-	 	 if(GetAsyncKeyState(0x44))//right 'a'
+	 
+	if(GetAsyncKeyState(0x44))//right 'a'
 	 {
-		
 		 ship2.fxmove+=0.0004;
+		 
 		 if(launch2==0)
-		 ball2.x+=0.0004;
+		 
+		 	ball2.x+=0.0004;
 	 
 	 
 	 }
+	 
 	 else if(GetAsyncKeyState(0x41))//left 's'
 	 {
-	 
-	 
-	 	 ship2.fxmove-=0.0004;
-	 if(launch2==0)
-	  ball2.x-=0.0004;
+	 	ship2.fxmove-=0.0004;
+	 	
+	 	if(launch2==0)
+	 	
+	  		ball2.x-=0.0004;
 	 }
 
 
-/*launch for player  cannon*/
+	/*launch for player  cannon*/
 
 	 if(launch==1 &&launch2==0)
 	 {
 		 if(ship2.fxpos+ship2.width>ball.fxpos &&block==0&&hit2<=3&&ship2.fypos>ball.fypos+ball.height)
-		 {block=1;
-			 hit2++;
-			 	ship2.texturecreated=false;
+		 {
+		 	block=1;
+		 	
+			hit2++;
+			
+			ship2.texturecreated=false;
 		 }
+		 
 		 fHighest1=fpower*fpower*sin(iangle*180/3.14)*sin(iangle*180/3.14)/(2*0.009);
+		 
 		 if(ball.fypos>-3)
 		 {
 		 	iTime+=0.005;
-		ball.fxmove=(iTime*fpower*cos(iangle*180/3.14));//0.3 v
+		 	
+			ball.fxmove=(iTime*fpower*cos(iangle*180/3.14));//0.3 v
 		
-		ball.fymove=(iTime*fpower*sin(iangle*180/3.14))-(0.5*0.009*iTime*iTime);//gravity 0.001
+			ball.fymove=(iTime*fpower*sin(iangle*180/3.14))-(0.5*0.009*iTime*iTime);//gravity 0.001
 			
-	
 			waterCheck=true;
+			
 			if(ball.fxpos<ship.fxpos+ship.height)
+			
 				waterSplash(ball.fxpos,-fHighest1/2,-1,w);
 		 }
+		 
 		 if(ball.fypos<-3)
-		{
-			//	DrawGame(device,1024,768);
-
+		 {
+			//DrawGame(device,1024,768);
 			
-						wavesPropogation(w);
+			wavesPropogation(w);
 					
-					
-							Sleep(30);
-			
+			Sleep(30);
 		}
 	 }
 
@@ -284,26 +302,33 @@ launch2=1;
 	  if(launch2==1 &&launch==0)
 	 {
 		 if(ship.fxpos<ball2.fxpos &&block==0 &&hit1<=3&&ship.fypos>ball2.fypos+ball2.height)
-			{ 
-				block=1;
-				hit1++;
-				ship.texturecreated=false;
+		 { 
+			block=1;
+			
+			hit1++;
+				
+			ship.texturecreated=false;
 		  }
+		  
 		 fHighest2=fpower2*fpower2*sin(iangle2*180/3.14)*sin(iangle2*180/3.14)/(2*0.009);
+		 
 		 if(ball2.fypos>-3)
 		 {
 		 	iTime2+=0.005;
-		ball2.fxmove=(iTime2*fpower2*cos(iangle2*180/3.14));//0.3 v
+		 	
+			ball2.fxmove=(iTime2*fpower2*cos(iangle2*180/3.14));//0.3 v
 		
-		ball2.fymove=(iTime2*fpower2*sin(iangle2*180/3.14))-(0.5*0.009*iTime2*iTime2);//gravity 0.001
+			ball2.fymove=(iTime2*fpower2*sin(iangle2*180/3.14))-(0.5*0.009*iTime2*iTime2);//gravity 0.001
 
 
 
-		if(ball2.fxpos<ship2.fxpos+ship.height)
-			waterSplash(ball2.fxpos,-fHighest2/2,-1,w);
+			if(ball2.fxpos<ship2.fxpos+ship.height)
+			
+				waterSplash(ball2.fxpos,-fHighest2/2,-1,w);
 		 }
+		 
 		 if(ball2.fypos<-3)
-		{
+		 {
 				//DrawGame(device,1024,768);
 
 			
